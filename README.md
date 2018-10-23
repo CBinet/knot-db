@@ -225,4 +225,3 @@ UPDATE (?:Person => {name: 'Paul Jones'});
 // Updates name of all nodes of type 'Person' with name 'Marie Jones' to value 'Paul Jones'.
 UPDATE (?:Person {name: 'Marie Jones'} => {name: 'Paul Jones'});
 ```
-# knot-db
