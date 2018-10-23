@@ -17,15 +17,18 @@ npm install knot-db --save
 
 ### Get started
 
-```js
-// Import the module
-import { KnotdDB } from "node_modules/knot-db";
+```ts
+// Create an instance of knotDB with existing data
+const dataset: Dataset = {
+    ...
+}
+const knotDB: KnotDB = new KnotDB(dataset);
 
 // Prepare the query
 const query = "MATCH (person:Person {origin: 'Canada'}) RETURN person;";
 
 // Execute the query
-const results = knotDB.execute(query);
+const results = knotDB.match(query);
 
 // Extract results
 const canadians = results.get("person");
@@ -35,7 +38,7 @@ const canadians = results.get("person");
 
 ## Insert query
 
-```js
+```ts
 // Adds a node 'P001' of type 'Person' with name 'John Doe' who owns node 'B001'.
 INSERT (P001:Person {name: 'John Doe'} {owns: ['B001']});
 ```
@@ -60,7 +63,7 @@ INSERT (P001:Person {name: 'John Doe'} {owns: ['B001']});
 
 **Examples**:
 
-```js
+```ts
 // Inserts a node with id '10001' of type 'Person'.
 INSERT (10001:Person);
 
@@ -73,7 +76,7 @@ INSERT (10001:Person {name: 'Paul Jones'} {likes: ['10003']});
 
 ### Insert Example
 
-```js
+```ts 
 INSERT (P002:Person {name: 'Paul Jones', alive: true, geolocation: [12;23;true;'Québec']} {likes: ['P001'], owns: ['B001';'B002']});
 ```
 
@@ -103,7 +106,7 @@ INSERT (P002:Person {name: 'Paul Jones', alive: true, geolocation: [12;23;true;'
 
 ## Match query
 
-```js
+```ts 
 // Matches all persons from 'Canada' who owns a library.
 MATCH (a:Person {origin: 'Canada'})=[owns]>(b:Building {type: 'library'}) RETURN a;
 ```
@@ -120,6 +123,7 @@ MATCH (a:Person {origin: 'Canada'})=[owns]>(b:Building {type: 'library'}) RETURN
 *Upper or lower camelcase format required*.
 
 **Type**: Type of the selector. This value is used to filter using the node type.  
+You can also use the wildcard operator (?) to match any type of node.  
 *Upper or lower camelcase format required*.
 
 **Criterias**: Criterias for selection. This value will be used to filter using the node attributes.  
@@ -127,7 +131,7 @@ MATCH (a:Person {origin: 'Canada'})=[owns]>(b:Building {type: 'library'}) RETURN
 
 **Examples**:
 
-```js
+```ts 
 // Match all of any type
 MATCH (a) RETURN a;
 
@@ -136,6 +140,9 @@ MATCH (a:Person) RETURN a;
 
 // Match all of type 'Person' with name 'John Doe'
 MATCH (a:Person {name: 'John Doe'}) RETURN a;
+
+// Match all of any type with location 'Québec, Canada'
+MATCH (a:? {location: 'Québec, Canada'}) RETURN a;
 ```
 
 ### Node Relations
@@ -156,7 +163,7 @@ MATCH (a:Person {name: 'John Doe'}) RETURN a;
 
 **Examples**:
 
-```js
+```ts 
 // Match all of type 'Person' type who 'likes' another 'Person'.
 MATCH (a:Person)=[likes]>(b:Person) RETURN a;
 
@@ -178,7 +185,7 @@ MATCH (a:Person)=[likes]>(b:Person)=[owns]>(c:Building) RETURN a;
 
 **Examples**:
 
-```js
+```ts 
 // Returns the dataset with the selector name 'a'.
 MATCH (a:Person) RETURN a;
 
@@ -190,7 +197,7 @@ MATCH (a:Person)=[owns]>(b:Building) RETURN a,b;
 
 ## Update query
 
-```js
+```ts 
 // Update name of node 'P001' to value 'John Doe'
 UPDATE (P001:Person => {name: 'John Doe'});
 ```
@@ -215,7 +222,7 @@ UPDATE (P001:Person => {name: 'John Doe'});
 
 **Examples**:
 
-```js
+```ts 
 // Updates name of node 'P001' to value 'Paul Jones'.
 UPDATE (P001:Person => {name: 'Paul Jones'});
 
