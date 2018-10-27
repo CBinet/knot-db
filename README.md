@@ -53,7 +53,7 @@ POST/query
 
 where **table** is the name of the table to apply the query and **query** is the actual query to execute.
 
-A typical response would like this :
+A typical response would look like this :
 
 ```json
 {
