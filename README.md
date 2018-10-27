@@ -1,44 +1,95 @@
 # KnotDatabase
 
-- [Installation](#installation)
+- [Get started](#get-started)
 - [Insert query](#insert-query)
 - [Match query](#match-query)
 - [Update query](#update-query)
 
 ***
 
-## Installation
+## Get started
 
-### npm
+### Installation
+
+#### Install globally
+
+```dos
+npm install -g knot-db
+```
+
+Then you can simply run :
+
+```dos
+knot-db
+```
+
+#### Install locally
 
 ```dos
 npm install knot-db --save
 ```
 
-### Get started
+Navigate to the install location and run the following command :
 
-```ts
-// Create an instance of knotDB with existing data
-const dataset: Dataset = {
-    ...
+```dos
+node knot-db.js
+```
+
+The database should now be running on the port specified in the *config.json* file. (*9600* by default)
+
+<img src="https://imgur.com/download/JKL9HRC" style="width: 50%; height: 50%; margin-left: 25%"/>
+
+### Sending queries
+
+To query the database, simply send an HTTP **post** request at ```localhost:<PORT>/query``` with a body like the following :
+
+```json
+POST/query
+{
+    "table" : "employees",
+    "query" : "MATCH (a:Person {name: 'Marc'}) RETURN a;"
 }
-const knotDB: KnotDB = new KnotDB(dataset);
+```
 
-// Prepare the query
-const query = "MATCH (person:Person {origin: 'Canada'}) RETURN person;";
+where **table** is the name of the table to apply the query and **query** is the actual query to execute.
 
-// Execute the query
-const results = knotDB.match(query);
+A typical response would like this :
 
-// Extract results
-const canadians = results.get("person");
+```json
+{
+    "a": {
+        "P256": {
+            "id": "P256",
+            "type": "Person",
+            "attributes": {
+                "name": "Marc",
+                "surname": "Davis",
+                "sector": "Marketing"
+            },
+            "relationships": {
+                "likes": ["P965"]
+            }
+        },
+        "P443": {
+            "id": "P443",
+            "type": "Person",
+            "attributes": {
+                "name": "Marc",
+                "surname": "Jones",
+                "sector": "Sales",
+                "intern": true
+            },
+            "relationships": {}
+        }
+    }
+}
 ```
 
 ***
 
 ## Insert query
 
-```ts
+```js
 // Adds a node 'P001' of type 'Person' with name 'John Doe' who owns node 'B001'.
 INSERT (P001:Person {name: 'John Doe'} {owns: ['B001']});
 ```
@@ -63,7 +114,7 @@ INSERT (P001:Person {name: 'John Doe'} {owns: ['B001']});
 
 **Examples**:
 
-```ts
+```js
 // Inserts a node with id '10001' of type 'Person'.
 INSERT (10001:Person);
 
@@ -76,7 +127,7 @@ INSERT (10001:Person {name: 'Paul Jones'} {likes: ['10003']});
 
 ### Insert Example
 
-```ts 
+```js 
 INSERT (P002:Person {name: 'Paul Jones', alive: true, geolocation: [12;23;true;'Québec']} {likes: ['P001'], owns: ['B001';'B002']});
 ```
 
@@ -106,7 +157,7 @@ INSERT (P002:Person {name: 'Paul Jones', alive: true, geolocation: [12;23;true;'
 
 ## Match query
 
-```ts 
+```js 
 // Matches all persons from 'Canada' who owns a library.
 MATCH (a:Person {origin: 'Canada'})=[owns]>(b:Building {type: 'library'}) RETURN a;
 ```
@@ -131,7 +182,7 @@ You can also use the wildcard operator (?) to match any type of node.
 
 **Examples**:
 
-```ts 
+```js 
 // Match all of any type
 MATCH (a) RETURN a;
 
@@ -163,7 +214,7 @@ MATCH (a:? {location: 'Québec, Canada'}) RETURN a;
 
 **Examples**:
 
-```ts 
+```js 
 // Match all of type 'Person' type who 'likes' another 'Person'.
 MATCH (a:Person)=[likes]>(b:Person) RETURN a;
 
@@ -185,7 +236,7 @@ MATCH (a:Person)=[likes]>(b:Person)=[owns]>(c:Building) RETURN a;
 
 **Examples**:
 
-```ts 
+```js 
 // Returns the dataset with the selector name 'a'.
 MATCH (a:Person) RETURN a;
 
@@ -197,7 +248,7 @@ MATCH (a:Person)=[owns]>(b:Building) RETURN a,b;
 
 ## Update query
 
-```ts 
+```js 
 // Update name of node 'P001' to value 'John Doe'
 UPDATE (P001:Person => {name: 'John Doe'});
 ```
@@ -222,7 +273,7 @@ UPDATE (P001:Person => {name: 'John Doe'});
 
 **Examples**:
 
-```ts 
+```js 
 // Updates name of node 'P001' to value 'Paul Jones'.
 UPDATE (P001:Person => {name: 'Paul Jones'});
 
