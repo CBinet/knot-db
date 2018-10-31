@@ -1,3 +1,5 @@
+<img src="https://imgur.com/download/R7jMcm0" style="width: 75%; height: 75%; margin-left: 12.5%"/>
+
 # KnotDatabase
 
 - [Get started](#get-started)
@@ -11,33 +13,19 @@
 
 ### Installation
 
-#### Install globally
+Run the following command to install the package
 
 ```dos
 npm install -g knot-db
 ```
 
-Then you can simply run :
+Then to start the database, you can simply run :
 
 ```dos
 knot-db
 ```
 
-#### Install locally
-
-```dos
-npm install knot-db --save
-```
-
-Navigate to the install location and run the following command :
-
-```dos
-node knot-db.js
-```
-
-The database should now be running on the port specified in the *config.json* file. (*9600* by default)
-
-<img src="https://imgur.com/download/JKL9HRC" style="width: 50%; height: 50%; margin-left: 25%"/>
+The database should now be running on the port specified in the *config.json* file. (***9600** by default*)
 
 ### Sending queries
 
