@@ -1,4 +1,4 @@
-<img src="https://imgur.com/download/R7jMcm0" style="width: 75%; height: 75%; margin-left: 12.5%"/>
+<img src="https://imgur.com/download/qpK9cuQ" style="width: 75%; height: 75%; margin-left: 12.5%"/>
 
 # KnotDatabase
 
@@ -41,7 +41,7 @@ POST/query
 
 where **table** is the name of the table to apply the query and **query** is the actual query to execute.
 
-A typical response would look like this :
+A typical response would like this :
 
 ```json
 {
