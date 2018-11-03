@@ -1,4 +1,4 @@
-<img src="https://imgur.com/download/qpK9cuQ" style="width: 75%; height: 75%; margin-left: 12.5%"/>
+<img src="https://imgur.com/download/chTnhqw" style="margin-top: 5%; margin-bottom: 5%"/>
 
 # KnotDatabase
 
